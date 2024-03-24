@@ -1,28 +1,21 @@
 
-//GET SEARCH FORM AND PAGE LINKS
-let searchForm = document.getElementById('searchForm')
-let pageLinks = document.getElementsByClassName('page-link')
 
-//ENSURE SEARCH FORM EXISTS
-if (searchForm) {
-    for (let i = 0; pageLinks.length > i; i++) {
-        pageLinks[i].addEventListener('click', function (e) {
+ 
+let searchForm = document.getElementById("searchForm")
+let pageLink = document.getElementsByClassName("page-link")
+if(searchForm){
+    for(let i=0;pageLink.length > i;i++)
+    {
+        pageLink[i].addEventListener('click',(e)=>{
             e.preventDefault()
-
-            //GET THE DATA ATTRIBUTE
-            let page = this.dataset.page
-
-            //ADD HIDDEN SEARCH INPUT TO FORM
+            let page = e.currentTarget.dataset.page
             searchForm.innerHTML += `<input value=${page} name="page" hidden/>`
-
-
-            //SUBMIT FORM
+            // name  and value are a pair which menas that when a submit happens the id and value are passed as name = value
             searchForm.submit()
         })
     }
 }
-
-
+ 
 
 let tags = document.getElementsByClassName('project-tag')
 
