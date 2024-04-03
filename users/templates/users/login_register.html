@@ -3,9 +3,7 @@
 {% block content %}
 
 {% if page == 'register' %}
-<!-- <h1> register User</h1>
-<p> Already have an account? <a href="{% url 'login' %}">Login</a></p> -->
-
+ 
  
 <div class="auth">
     <div class="card">
@@ -74,7 +72,8 @@
         <p>Hello Developer, Welcome Back!</p>
       </div>
 
-      <form action="{% url 'login' %}" method="POST" class="form auth__form">
+      <!-- action here is set to "" because of the next attribute  -->
+      <form action="" method="POST" class="form auth__form">
         {% csrf_token %}
         <!-- Input:Username -->
         <div class="form__field">
