@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from .models import Profile,Skill
+from .models import Profile,Skill,Message
 from django.shortcuts import render,redirect
 from django.contrib import  messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .forms import CustomUser, ProfileForm, SkillForm
+from .forms import CustomUser, ProfileForm, SkillForm, MessageForm
 from django.contrib.auth import login,authenticate,logout
 from django.db.models import Q
 from .utils import searchProfiles,paginateProfiles
@@ -144,3 +144,53 @@ def deleteSkill(request,pk):
         messages.success(request,"Skill was deleted successfully")
         return redirect('account')
     return render(request,'delete_object.html',context)
+
+
+
+@login_required(login_url="login")
+def inbox(request):
+    profile = request.user.profile
+
+    #messagerequest has all messages for this profile
+    messagerequest = profile.messages.all() #due to related name in models py file
+    unread_count = messagerequest.filter(is_read=False).count()
+    context = {'messagerequest':messagerequest,'unread_count':unread_count}
+    return render(request,'users/inbox.html',context)
+
+@login_required(login_url="login")
+def viewmessage(request,pk):
+    profile = request.user.profile
+    message = profile.messages.get(id=pk) #due to related name in models py file
+    if message.is_read == False:
+        message.is_read = True
+        message.save()
+    context={'message':message}
+    return render(request,'users/message.html',context)
+
+
+def createMessage(request,pk):
+    recipient = Profile.objects.get(id=pk)
+    form = MessageForm()
+    try:
+        sender= request.user.profile
+    except:
+        sender = None
+    if request.method=="POST":
+        form= MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender =sender
+            message.recipient = recipient
+
+            # this if statement is when user is logged in, we want to take the name and email id as the registerd email and name
+            if sender:
+                message.name = sender.name
+                message.email = sender.email
+            message.save()
+
+            messages.success(request,"Your message was successfully sent!")
+            return redirect("user-profile",pk)
+    context={'recipient':recipient,'form':form}
+    return render(request,'users/message_form.html',context)
+
+
