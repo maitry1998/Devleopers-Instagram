@@ -5,6 +5,9 @@ from django.dispatch import receiver
 from .models import Profile
 from django.contrib.auth.models import User
 
+from django.core.mail import send_mail
+from django.conf import settings
+
 def createProfile(sender,instance,created,**kwargs):
     if created:
         user = instance
@@ -14,7 +17,19 @@ def createProfile(sender,instance,created,**kwargs):
             email = user.email,
             name= user.first_name,
         )
-    print("profile saved")
+        print("profile saved")
+        subject = "Welcome aboard!!"
+        message = "Welcome to the team! Think of our platform as the Instagram for developers—a community specially crafted for individuals like you, where you can connect, interact, and share with like-minded peers. Our hope is that within this vibrant pool of developers, you'll discover not just colleagues, but your favorite devs to collaborate and grow with. Welcome aboard, and let the creative synergy begin!"
+        
+        
+        send_mail(
+            subject,
+            message,
+            settings.EMAIL_HOST_USER,
+            [profile.email],
+            fail_silently=False
+            )
+        print("Email sent")
 
 def updateUser(sender,instance,created,**kwargs):
     profile=instance
@@ -27,9 +42,11 @@ def updateUser(sender,instance,created,**kwargs):
         
     print("profile saved")
 
+@receiver(post_delete,sender=Profile)
 def deleteUser(sender,instance,**kwargs):
     try:
-        print("INSTANCE : ",instance)
+        # print("INSTANCE : ",instance)
+        # import pdb;pdb.set_trace()
         user = instance.user
         user.delete()
         print("deleting user")
@@ -43,7 +60,7 @@ post_save.connect(createProfile,sender=User)
 
 
 post_save.connect(updateUser,sender=Profile)
-post_delete.connect(deleteUser,sender=Profile)
+# post_delete.connect(deleteUser,sender=Profile)
 
 
 
