@@ -155,8 +155,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "unofficialmaitry@gmail.com"  # Your email address
-EMAIL_HOST_PASSWORD = "gkrbggtszopxmtay"   # Your app password
+EMAIL_HOST_PASSWORD = "asdaswsfvkbsfdsypkjuofsdfjcsdfdsgfjum"   # Your app password
 
-# sid : Allsame@123
-# bansi : Allsame@123
-# gkrb ggts zopx mtay
