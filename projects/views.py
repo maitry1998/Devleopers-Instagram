@@ -8,6 +8,7 @@ from .utils import searchProjects
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from .utils import paginateProjects
 from django.contrib import messages
+
 # Create your views here.
 def projects(request):
     projects,search_query= searchProjects(request)
@@ -49,6 +50,9 @@ def createProject(request):
             project = form.save(commit=False)
             project.owner = request.user.profile
             project.save()
+
+            #added this below line to save many to many field of multiple checkbox
+            form.save_m2m()
             return redirect('account')
     return render(request,'projects/project_form.html',context)
 

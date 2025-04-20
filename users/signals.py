@@ -74,4 +74,15 @@ post_save.connect(updateUser,sender=Profile)
 # A boolean; True if a new record was created.
 
 
-    
+# Signals are particularly useful for executing specific actions when certain events occur, such as saving a model or deleting an object.
+
+# Key Concepts of Signals
+# Sender: The model or component that sends the signal (e.g., User or Profile in this example).
+# Receiver: The function or method that listens for and reacts to the signal.
+# Signal: The event being listened to (e.g., post_save, post_delete).
+# Commonly used Django signals include:
+
+# post_save: Triggered after a model's save() method is called.
+# pre_save: Triggered before a model's save() method is called.
+# post_delete: Triggered after a model's delete() method is called.
+# pre_delete: Triggered before a model's delete() method is called.

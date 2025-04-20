@@ -40,7 +40,18 @@ INSTALLED_APPS = [
 
     'projects.apps.ProjectsConfig',
     'users.apps.UsersConfig',
+
+    'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+       
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -155,5 +166,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "unofficialmaitry@gmail.com"  # Your email address
-EMAIL_HOST_PASSWORD = "asdaswsfvkbsfdsypkjuofsdfjcsdfdsgfjum"   # Your app password
+EMAIL_HOST_PASSWORD = "wvkbypkjuojcfjum"   # Your app password
 
+# sid : Allsame@123
+# bansi : Allsame@123
+# gkrb ggts zopx mtay

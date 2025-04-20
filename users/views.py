@@ -53,7 +53,6 @@ def registerUser(request):
             return redirect("edit-account")
         
         else:
-
             messages.error(request,'Something wrong')
     context = {'page':page,'form':form}
     return render(request,'users/login_register.html',context)
